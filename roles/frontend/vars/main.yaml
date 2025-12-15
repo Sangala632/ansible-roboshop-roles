@@ -1,1 +1,5 @@
 CATALOGUE_HOST: catalogue.hellodevsecops.space
+USER_HOST: user.hellodevsecops.space
+CART_HOST: cart.hellodevsecops.space
+SHIPPING_HOST: shipping.hellodevsecops.space
+PAYMENT_HOST: payment.hellodevsecops.space

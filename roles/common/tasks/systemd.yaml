@@ -1,0 +1,14 @@
+- name: copy catalogue service to system directory
+  ansible.builtin.template:
+    src: Catalogue.Service
+    dest: /etc/systemd/system/catalogue.service
+
+- name: reload systemd daemon
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: start and enable catalogue
+  ansible.builtin.service:
+    name: catalogue
+    enabled: yes
+    state: restarted # even app is not running we can restart

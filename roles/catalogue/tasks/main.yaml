@@ -1,0 +1,38 @@
+- name: app-setapp
+  include_role:
+    name: common
+    tasks_from: app-setup.yaml
+
+- name: nodejs setup
+  include_role:
+    name: common
+    tasks_from: nodejs.yaml
+
+- name: copy mongodb repo
+  ansible.builtin.copy:
+    src: mongodb.repo
+    dest: /etc/yum.repos.d/mongo.repo    
+
+- name: install mongodb client
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: present
+
+- name: check whether catalogue products exist
+  ansible.builtin.shell:
+    cmd: "mongosh --host mongodb.hellodevsecops.space --eval 'db.getMongo().getDBNames().indexOf(\"catalogue\")'"
+  register: catalogue_output
+
+- name: print catalogue output
+  ansible.builtin.debug:
+    msg: "{{ catalogue_output }}"
+
+- name: load the products
+  ansible.builtin.shell:
+    cmd: "mongosh --host mongodb.hellodevsecops.space </app/db/master-data.js"
+  when: catalogue_output.stdout | int < 0
+
+- name: systemd setup
+  include_role:
+    name: common
+    tasks_from: systemd.yaml

@@ -1,3 +1,5 @@
 CART_HOST: cart.hellodevsecops.space
 USER_HOST: user.hellodevsecops.space
 RABBITMQ_HOST: rabbitmq.hellodevsecops.space
+AMQP_USER: roboshop
+AMQP_PASS: roboshop123

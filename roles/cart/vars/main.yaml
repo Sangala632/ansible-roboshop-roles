@@ -1,2 +1,3 @@
-CATALOGUE_HOST: catalogue.hellodevsecops.space
 REDIS_HOST: redis.hellodevsecops.space
+CATALOGUE_HOST: catalogue.hellodevsecops.space
+

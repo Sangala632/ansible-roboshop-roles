@@ -5,8 +5,8 @@
   loop:
   - maven
   - mysql
-
-  - name: install PyMySQL and cryptography 
+  
+- name: install PyMySQL and cryptography 
   ansible.builtin.pip:
     name: "{{ item }}"
     executable: pip3.9
@@ -14,17 +14,12 @@
   - cryptography
   - PyMySQL
 
-- name: app-setapp
-  include_role:
-    name: common
-    tasks_from: app-setup.yaml
-
 - name: install maven dependencies
   ansible.builtin.command: mvn clean package
   args:
     chdir: /app
 
 - name: rename jar file
-  ansible.builtin.command: "mv target/{{ component }}-1.0.jar {{ coponent }}.jar"
+  ansible.builtin.command: "mv target/{{ component }}-1.0.jar {{ component }}.jar"
   args:
-    chdir: /app  
+    chdir: /app 

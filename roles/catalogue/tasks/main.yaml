@@ -18,21 +18,43 @@
     name: mongodb-mongosh
     state: present
 
-- name: check whether catalogue products exist
+- name: check the products loaded or not  
   ansible.builtin.shell:
     cmd: "mongosh --host mongodb.hellodevsecops.space --eval 'db.getMongo().getDBNames().indexOf(\"catalogue\")'"
   register: catalogue_output
+  ignore_errors: true
+  ignore_unreachable: true
 
 - name: print catalogue output
   ansible.builtin.debug:
     msg: "{{ catalogue_output }}"
+  ignore_errors: true
+  ignore_unreachable: true
+
 
 - name: load the products
   ansible.builtin.shell:
     cmd: "mongosh --host mongodb.hellodevsecops.space </app/db/master-data.js"
   when: catalogue_output.stdout | int < 0
+  ignore_errors: true
+  ignore_unreachable: true
+
 
 - name: systemd setup
   include_role:
     name: common
     tasks_from: systemd.yaml
+
+- name: deployment
+  tags:
+    - deployment
+  import_role:
+    name: common
+    tasks_from: deployment
+
+# - name: deployment
+#   tags:
+#     - deployment
+#   include_role_role:
+#     name: common
+#     tasks_from: deployment

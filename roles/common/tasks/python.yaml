@@ -6,7 +6,15 @@
   - python3 
   - gcc 
   - python3-devel
+  - python3-boto3
+  - python3-botocore
 
+- name: Install amazon.aws collection
+  ansible.builtin.command: >
+    ansible-galaxy collection install amazon.aws
+  args:
+    creates: /root/.ansible/collections/ansible_collections/amazon/aws
+    
 - name: install dependencies
   ansible.builtin.pip:
     requirements: requirements.txt
